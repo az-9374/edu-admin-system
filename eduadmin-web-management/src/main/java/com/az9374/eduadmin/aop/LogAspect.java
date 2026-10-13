@@ -47,7 +47,7 @@ public class LogAspect {
                 String methodParams = Arrays.toString(joinPoint.getArgs());
 
                 // 获取返回值
-                String returnValue = result.toString();
+                String returnValue = result==null? "": result.toString();
 
                 // 计算执行耗时
                 long costTime = System.currentTimeMillis() - begin;
@@ -64,6 +64,8 @@ public class LogAspect {
                 operateLog.setMethodParams(methodParams);
                 operateLog.setReturnValue(returnValue);
                 operateLog.setCostTime(costTime);
+                CurrentHolder.remove();
+
 
                 // 5. 调用Mapper持久化日志
                 operateLogMapper.insert(operateLog);
